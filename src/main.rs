@@ -11,6 +11,8 @@ use std::path::Path;
 const FRONT_SIZE: (u32, u32) = (44, 44);
 const BACK_SIZE: (u32, u32) = (32, 32);
 
+# TODO add explanation comments
+
 fn main() -> Result<(), Box<dyn Error>> {
     let yaml_cli = load_yaml!("cli.yaml");
     let cli_args = App::from_yaml(yaml_cli).get_matches();
