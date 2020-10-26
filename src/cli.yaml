@@ -1,0 +1,14 @@
+name: epicminecraftskinz
+version: "0.1.0"
+author: "JulianGmp <23147553+JulianGmp@users.noreply.github.com>"
+about: Make epic minecraft skin with full images
+args:
+    - front_image:
+        index: 1
+        required: true
+    - back_image:
+        index: 2
+        required: true
+    - output_image:
+        index: 3
+        required: true
