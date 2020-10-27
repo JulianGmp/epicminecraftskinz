@@ -1,5 +1,8 @@
 #!/bin/sh
 
+cd "$(dirname "$0")" || exit
+rootdir=$(pwd)
+
 make_release() {
 	arch="$1"
 	version="$2"
@@ -7,7 +10,9 @@ make_release() {
 	echo "Building v$version for $arch"
 	rustup target add "$arch" && \
 	cargo build --release --target="$arch" && \
-	zip "epicminecraftskinz_v${version}_${arch}.zip" "./target/$arch/release/epicminecraftskinz${fextension}"
+	cd "./target/$arch/release" && \
+	zip "$rootdir/epicminecraftskinz_v${version}_${arch}.zip" "./epicminecraftskinz${fextension}"
+	cd "$rootdir" || return
 }
 
 vers="0.2.0"
