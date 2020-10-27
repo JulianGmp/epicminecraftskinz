@@ -74,7 +74,7 @@ fn copy_front_regions(src: &RgbaImage, dest: &mut RgbaImage) {
     // Head under
     copy_region_180deg(src, dest, (16, 0), (18, 16), (8, 8));
     // Body front, left, right
-    copy_region(src, dest, (16, 20), (12, 16), (16, 12));
+    copy_region(src, dest, (16, 20), (14, 16), (16, 12));
     // Body top
     copy_region(src, dest, (20, 16), (18, 12), (8, 4));
     // Body under
