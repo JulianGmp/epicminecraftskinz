@@ -21,7 +21,7 @@ It is recommended to use square, close-up images for the inputs.
 ---
 You don't know what a command line is?
 You don't get all of this **nerd shit**?
-Check [this](google.com/search?q=what+is+a+command+line+and+how+do+I+use+it) out!
+Check [this](http://www.google.com/search?q=what+is+a+command+line+and+how+do+I+use+it) out!
 
 ## Building
 
