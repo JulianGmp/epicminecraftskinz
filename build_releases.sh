@@ -15,7 +15,7 @@ make_release() {
 	cd "$rootdir" || return
 }
 
-vers="0.2.0"
+vers="1.0.0"
 
 make_release "x86_64-unknown-linux-gnu" "$vers" ""
 make_release "x86_64-pc-windows-gnu" "$vers" ".exe"
