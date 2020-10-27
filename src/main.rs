@@ -24,7 +24,12 @@ fn main() -> Result<(), Box<dyn Error>> {
         return Err(Box::new(IoError::new(IoErrorKind::AlreadyExists, msg)));
     }
     // this single line is so ugly that it makes me never wanna touch rust again
-    let file_out_ext = Path::new(file_out).extension().unwrap().to_str().unwrap().to_lowercase();
+    let file_out_ext = Path::new(file_out)
+        .extension()
+        .unwrap()
+        .to_str()
+        .unwrap()
+        .to_lowercase();
     if file_out_ext != "png" {
         eprintln!("Warning: output file's extension is not 'png'. The saved file will be a png, regardless of the output extension!");
     }
