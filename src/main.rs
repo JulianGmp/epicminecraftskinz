@@ -64,25 +64,40 @@ fn copy_back_regions(src: &RgbaImage, dest: &mut RgbaImage) {
 }
 
 fn copy_front_regions(src: &RgbaImage, dest: &mut RgbaImage) {
-    // Head regions (TRFL + U)
+    // Head (top, right, left, front)
     copy_region(src, dest, (0, 0), (10, 0), (24, 16));
+    // Head under
     copy_region_180deg(src, dest, (16, 0), (18, 16), (8, 8));
-    // Body front
-    copy_region(src, dest, (20, 20), (18, 16), (8, 12));
-    // right arm
-    copy_region(src, dest, (40, 20), (10, 16), (8, 12));
+    // Body front, left, right
+    copy_region(src, dest, (16, 20), (12, 16), (16, 12));
+    // Body top
+    copy_region(src, dest, (20, 16), (18, 12), (8, 4));
+    // Body under
+    copy_region(src, dest, (28, 16), (18, 28), (8, 4));
+    // right arm outter, front, inner
+    copy_region(src, dest, (40, 20), (10, 16), (12, 12));
+    // right arm top
     copy_region(src, dest, (44, 16), (14, 12), (4, 4));
+    // right arm bottom
     copy_region_180deg(src, dest, (48, 16), (14, 28), (4, 4));
-    // left arm
-    copy_region(src, dest, (36, 52), (26, 16), (8, 12));
+    // left arm inner, front, outter
+    copy_region(src, dest, (32, 52), (22, 16), (12, 12));
+    // left arm top
     copy_region(src, dest, (36, 48), (26, 12), (4, 4));
+    // left arm bottom
     copy_region_180deg(src, dest, (40, 48), (26, 28), (4, 4));
-    // right leg
-    copy_region(src, dest, (0, 20), (14, 28), (8, 12));
+    // right leg outter, front, inner
+    copy_region(src, dest, (0, 20), (14, 28), (12, 12));
+    // right leg bottom
     copy_region_180deg(src, dest, (8, 16), (18, 40), (4, 4));
-    // left leg
-    copy_region(src, dest, (20, 52), (22, 28), (8, 12));
+    // right leg top
+    copy_region(src, dest, (4, 16), (18, 24), (4, 4));
+    // left leg inner, front, outter
+    copy_region(src, dest, (16, 52), (18, 28), (12, 12));
+    // left leg bottom
     copy_region_180deg(src, dest, (24, 48), (22, 40), (4, 4));
+    // left leg top
+    copy_region(src, dest, (20, 48), (22, 24), (4, 4));
 }
 
 fn copy_region(
