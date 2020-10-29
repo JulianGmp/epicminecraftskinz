@@ -12,36 +12,48 @@ const FRONT_SIZE: (u32, u32) = (44, 44);
 const BACK_SIZE: (u32, u32) = (32, 32);
 
 fn main() -> Result<(), Box<dyn Error>> {
+    // Read CLI arguments
     let yaml_cli = load_yaml!("cli.yaml");
     let cli_args = App::from_yaml(yaml_cli).get_matches();
 
-    let file_front = cli_args.value_of("front_image").unwrap();
-    let file_back = cli_args.value_of("back_image").unwrap();
-    let file_out = cli_args.value_of("output_image").unwrap();
+    let file_path_front = cli_args.value_of("front_image").unwrap();
+    let file_path_back = cli_args.value_of("back_image").unwrap();
+    let file_path_out = cli_args.value_of("output_image").unwrap();
+    let overwrite_output_file = cli_args.is_present("overwrite_output_file");
 
-    if Path::new(file_out).exists() {
-        let msg = format!("File '{}' already exists!", file_out);
+    // check for possible errors when overwriting the output file
+    let output_file = Path::new(file_path_out);
+    if output_file.exists() && !overwrite_output_file {
+        let msg = format!(
+            "Path '{}' already exists! Use the -f option to overwrite it.",
+            file_path_out
+        );
+        return Err(Box::new(IoError::new(IoErrorKind::AlreadyExists, msg)));
+    } else if output_file.is_dir() && overwrite_output_file {
+        let msg = format!(
+            "Output path '{}' is a directory, cannot overwrite!",
+            file_path_out
+        );
         return Err(Box::new(IoError::new(IoErrorKind::AlreadyExists, msg)));
     }
+    // Check for the output file extension and give the user a warning if it's not "png"
     // this single line is so ugly that it makes me never wanna touch rust again
-    let file_out_ext = Path::new(file_out)
-        .extension()
-        .unwrap()
-        .to_str()
-        .unwrap()
-        .to_lowercase();
-    if file_out_ext != "png" {
-        eprintln!("Warning: output file's extension is not 'png'. The saved file will be a png, regardless of the output extension!");
+    let file_out_ext = output_file.extension();
+    if file_out_ext != None {
+        let ext_str = file_out_ext.unwrap().to_str().unwrap().to_lowercase();
+        if ext_str != "png" {
+            eprintln!("Warning: output file's extension is not 'png'. The saved file will be a PNG, regardless of the output extension!");
+        }
     }
 
-    let in_front = load_and_resize(file_front, FRONT_SIZE)?;
-    let in_back = load_and_resize(file_back, BACK_SIZE)?;
+    let in_front = load_and_resize(file_path_front, FRONT_SIZE)?;
+    let in_back = load_and_resize(file_path_back, BACK_SIZE)?;
     let mut canvas: RgbaImage = ImageBuffer::new(64, 64);
 
     copy_back_regions(&in_back, &mut canvas);
     copy_front_regions(&in_front, &mut canvas);
 
-    canvas.save_with_format(file_out, ImageFormat::Png)?;
+    canvas.save_with_format(output_file, ImageFormat::Png)?;
 
     return Ok(());
 }

@@ -15,3 +15,8 @@ args:
         index: 3
         required: true
         help: File path to write the generated skin into
+    - overwrite_output_file:
+        short: f
+        long: overwrite-output
+        help: Overwrite the output file content if necessary
+        required: false
