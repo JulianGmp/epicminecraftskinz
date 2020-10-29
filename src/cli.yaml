@@ -6,9 +6,12 @@ args:
     - front_image:
         index: 1
         required: true
+        help: Image file for the front of the skin, scaled to 44x44
     - back_image:
         index: 2
         required: true
+        help: Image file for the back of the skin, scaled to 32x32
     - output_image:
         index: 3
         required: true
+        help: File path to write the generated skin into
